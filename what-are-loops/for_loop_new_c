@@ -1,7 +1,31 @@
 #!/bin/bash
 
-# A script to display a series of numbers using a for loop.
+department=("computer science" "electical engineering" "medical lab" "mechanical engineering")
 
-for (( i=0; i<5; i=i+1 )); do
-    echo "The counter is at: $i"
-done
+call_function(){
+    for i in "${department[@]}";
+    do
+        if [[ $i == "computer science" ]];
+        then
+            echo "this is $i department"
+
+        elif [[ $i == "electical engineering" ]];
+        then
+            echo "this is $i department"
+
+        elif [[ $i == "medical lab" ]];
+        then
+            
+            echo "this is $i department"
+
+        elif [[ $i == "mechanical engineering" ]];
+        then
+            echo "this is $i department"
+
+        else
+            echo "No match found"
+        fi
+    done
+}
+
+call_function

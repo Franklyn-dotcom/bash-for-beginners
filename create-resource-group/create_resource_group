@@ -1,68 +1,92 @@
 #!/bin/bash
 
-# A script that will create a resource group in Azure
+# A script that will create a civo instance.
 
 setup() { 
-    # Install az cli
-    curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
-    # Login
-    az login --use-device-code
-    echo "You're logged in."
+    # Install civo cli
+    curl -sL https://civo.com/get | sudo bash
+
+    # Add civo api key for authentication
+    civo apikey add Demo_Test dk0xRbKM5P3LPvYPlwscFOux8FoLl9pZ7AWR9b0V25PRieHv9W
+    echo "Api key added successfully."
+    echo -e "\n\n"
 }
 
-# Print out 5 recommended regions
+
+
+
+# Print out available civo regions
 print_out_regions() {
-    regions_array=($( az account list-locations --query "[?metadata.regionCategory=='Recommended'].{Name:name}" -o tsv | head -n 5))
+    regions_array=($( civo region ls | head -n 10))
     for i in "${regions_array[@]}"
     do
        echo "$i"
     done
+    echo -e "\n\n"
 }
 
-# Select a region
-check_region() {
+
+
+
+
+# select a region
+pick_region() {
     local region_exists=false
-    while [[ "$region_exists" = false ]];  do
-        print_out_regions
-        read -p "Enter your region: " selected_region
-        for j in "${regions_array[@]}"
+    while [[ "$region_exists" = false ]];  do #Run the following statement if the condition is true
+        print_out_regions #calling the print out region function
+        read -p "Enter your region: " selected_region #reading an input
+        for j in "${regions_array[@]}" #loop through the regions_array from the print out region function
         do
-            if [[ "$selected_region" == "$j" ]]; then
+            if [[ "$selected_region" == "$j" ]]; then 
                 region_exists=true
-                echo "Region exists"
+                echo "changing the current region to $selected_region"
+                civo region current "$selected_region" #change the region to the value of the selected_Region input
                 break
             else
                 continue
             fi
         done
     done
+    echo -e "\n\n"
 }
 
-# Check if resource group already exists.
-check_resource_group () {
-    while true; do
-        read -p "Enter a name for you resource group: " resource_group
-        if [ $(az group exists --name $resource_group) = true ]; then 
-            echo "The group $resource_group exists in $selected_region, please provide another name..."
-        else
-            break
-        fi
+# list available civo instance sizes 
+
+list_avil_sizes () {
+    sizes_array=($( civo size ls | head -n 10))
+    for k in "${sizes_array[@]}"
+    do
+        echo "$k"
     done
+    echo -e "\n\n"
 }
 
-# Create the resource group
-create_resource_group () {
-    echo "Creating resource group: $resource_group in $selected_region"
-    az group create -g $resource_group -l $selected_region | grep provisioningState
+# create a civo instance using the selected sizes 
+
+create_civo_instance() {
+    local sizes_exist=false
+    while [[ $sizes_exist = false ]];
+    do
+        list_avil_sizes
+        read -p "Enter your civo instance size: " selected_size
+        for x in "${sizes_array[@]}"
+        do
+            if [[ $selected_size == "$x" ]];
+            then
+                sizes_exist=true
+                echo -e "\n\n creating civo instance ......"
+                civo instance create --hostname=bash-demo --size "$selected_size"  --diskimage=ubuntu-focal --initialuser=root
+                break
+            else
+                continue
+            fi
+        done
+    done
+    echo -e "\n\n"
 }
 
-#List all resource groups
-list_resource_groups() {
-    az group list -o table
-}
-
-# setup
-check_region
-check_resource_group 
-create_resource_group
-list_resource_groups
+setup
+print_out_regions
+pick_region
+list_avil_sizes
+create_civo_instance

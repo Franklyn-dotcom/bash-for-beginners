@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# A script to display a series of numbers using while.
+# A script to display a series of numbers using until loop.
 
 counter=1
 until [[ "$counter" -gt 10 ]]; do

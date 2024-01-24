@@ -1,0 +1,71 @@
+#!/bin/bash
+
+# A script that allows users to quickly upload files
+# to a specified cloud storage solution, providing a simple and seamless 
+# upload experience similar to popular storage services.
+
+
+setup() { 
+    # Install civo cli
+    curl -sL https://civo.com/get | sudo bash
+
+    # Add civo api key for authentication
+    civo apikey add Demo_Test dk0xRbKM5P3LPvYPlwscFOux8FoLl9pZ7AWR9b0V25PRieHv9W
+    echo "Api key added successfully."
+    echo -e "\n\n"
+}
+
+# crate and list the object credential store in your account 
+
+create_obj_cred(){
+    # delete existing credential 
+    #civo objectstore credential delete project-cred --region FRA1
+    #civo objectstore credential delete project-cred --region LON1
+
+    #create the obj store credential 
+    #civo objectstore credential create project-cred --region FRA1
+
+    echo "Credential created successfully"
+
+    # list the obj store credential
+    civo objectstore credential ls --region FRA1
+    # civo objectstore credentials export --help
+    # civo objectstore credential secret --access-key D1UJHQU5L6CJLT8LH3ST
+    echo -e "\n"
+}
+
+create_obj_store(){
+    #check if there's any existing created objectstore 
+    civo objectstore ls
+    echo -e "\n"
+    # create object store 
+    #civo objectstore create project-obj-store --region FRA1
+}
+
+upload_files_store(){
+    #install s3cmd
+    sudo pip install s3cmd
+
+    #check if the file exist 
+    if [[ -f $file_nae ]];
+    then
+        # civo objectstore credential secret -a WJT39HFQ75B8N9RYBS7Y
+        # civo objectstore credential export --access-key=WJT39HFQ75B8N9RYBS7Y
+        # s3cmd --configure
+        
+        
+    else
+        echo "Not found"
+
+    fi
+}
+
+
+file_nae=create_resource_group
+echo "$file_nae"
+
+
+setup
+create_obj_cred
+create_obj_store
+upload_files_store

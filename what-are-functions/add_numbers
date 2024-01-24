@@ -1,6 +1,6 @@
 #!/bin/bash
 
-check_even () {
+check_even_or_odd () {
     local mod=2
     echo "The value of mod is $mod"
     if [ $(("$1" % $mod)) -eq 0 ]
@@ -12,7 +12,6 @@ check_even () {
 }
 
 
-number=2344
+number=21
 
-check_even $number
-echo $mod
+check_even_or_odd $number

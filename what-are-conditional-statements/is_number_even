@@ -1,10 +1,17 @@
 #!/bin/bash
 
-number=25
+echo "Enter your grade: "
+read mark
+result=$((9 * 2))
 
-if [ $((number % 2)) -eq 0 ];
+if (( $mark >= 90 )); 
 then
-   echo "The number $number is even!";
+   echo "Excellent!. Grade A+"
+   echo "$((mark * result)) is the total percentage"
+elif (( $mark < 90 && mark >= 80 ));
+then
+   echo "Very good!. Grade A"
+
 else 
-   echo "The number $number is odd!"
+   echo "Very Poor Grade. Work harder next term"
 fi

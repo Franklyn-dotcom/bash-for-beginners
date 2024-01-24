@@ -1,5 +1,13 @@
 #!/bin/bash
 
-# Welcome to your first Bash Script
+# Welcome to your first bash script
 
-echo 'Hello World!'
+# creating varible
+
+hello_world='Hello World!'
+current_dir=$(pwd)
+readonly unchange_value='white'
+
+unchange_value='blue'
+
+echo "$hello_world, The current directory is ${current_dir} and the text color is $unchange_value"

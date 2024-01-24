@@ -1,10 +1,15 @@
 #!/bin/bash
 
-# Print values in an array using for loops
+# Print values in an services array using for loops
 
-services=("loadbalancer" "virtualmachine" "storage")
+
+services=("public cloud" "private cloud" "IaaS" "SaaS" "PaaS") 
 
 for i in "${services[@]}"
 do
    echo $i
 done
+
+call_out=$(pwd)
+
+echo "$call_out"

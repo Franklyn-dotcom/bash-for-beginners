@@ -1,0 +1,23 @@
+total 24
+-rw-rw-rw- 1 vscode root    53 Jan 10 12:24 error.txt
+-rw-rw-rw- 1 vscode vscode   0 Jan 12 21:32 new2.txt
+-rw-rw-rw- 1 vscode vscode   0 Jan 12 21:32 new.txt
+-rw-rw-rw- 1 vscode root   390 Jan 10 12:24 output2.txt
+-rw-rw-rw- 1 vscode root   333 Jan 10 12:24 output.txt
+-rw-rw-rw- 1 vscode root   677 Jan 10 12:24 paragrah.txt
+-rw-rw-rw- 1 vscode root   415 Jan 10 12:24 part1.txt
+-rw-rw-rw- 1 vscode root   262 Jan 10 12:24 part2.txt
+-rw-rw-rw- 1 vscode root     0 Jan 10 12:24 part3.txt
+-rw-rw-rw- 1 vscode root     0 Jan 10 12:24 part4.txt
+total 28
+-rw-rw-rw- 1 vscode root    53 Jan 10 12:24 error.txt
+-rw-rw-rw- 1 vscode vscode   0 Jan 12 21:32 new2.txt
+-rw-rw-rw- 1 vscode vscode   0 Jan 12 21:33 new3.txt
+-rw-rw-rw- 1 vscode vscode 552 Jan 12 21:32 new.txt
+-rw-rw-rw- 1 vscode root   390 Jan 10 12:24 output2.txt
+-rw-rw-rw- 1 vscode root   333 Jan 10 12:24 output.txt
+-rw-rw-rw- 1 vscode root   677 Jan 10 12:24 paragrah.txt
+-rw-rw-rw- 1 vscode root   415 Jan 10 12:24 part1.txt
+-rw-rw-rw- 1 vscode root   262 Jan 10 12:24 part2.txt
+-rw-rw-rw- 1 vscode root     0 Jan 10 12:24 part3.txt
+-rw-rw-rw- 1 vscode root     0 Jan 10 12:24 part4.txt

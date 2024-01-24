@@ -4,14 +4,14 @@
 
 read -p "Enter a number: " n
 case $n in
-    ???) 
-        echo "One";;
-    2) 
-        echo "Two";;
+    1|2) 
+        echo "it is number $n";;
+    [3-9]) 
+        echo "number 3 through 9";;
     aa) 
-        echo "Three";;
+        echo "characters";;
     *.txt) 
-        echo "Four";;
+        echo "$n!. it is a txt extension";;
     *) 
         echo "Other";;
 esac
