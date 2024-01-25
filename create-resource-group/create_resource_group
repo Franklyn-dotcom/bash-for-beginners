@@ -7,7 +7,7 @@ setup() {
     curl -sL https://civo.com/get | sudo bash
 
     # Add civo api key for authentication
-    civo apikey add Demo_Test dk0xRbKM5P3LPvYPlwscFOux8FoLl9pZ7AWR9b0V25PRieHv9W
+    civo apikey add Demo_Test <api-key>
     echo "Api key added successfully."
     echo -e "\n\n"
 }
