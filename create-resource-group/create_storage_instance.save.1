@@ -11,7 +11,7 @@ setup() {
 
     # Add civo api key for authentication
 
-    civo apikey add Demo_Test <api-key>
+    civo apikey add Demo_Test dk0xRbKM5P3LPvYPlwscFOux8FoLl9pZ7AWR9b0V25PRieHv9W
     echo "Api key added successfully."
     echo -e "\n\n"
 }
@@ -35,21 +35,17 @@ create_obj_cred(){
 create_obj_store(){
 
     #create object store 
-    civo objectstore create project-obj-store --owner-name project-cred --region FRA1
+    civo objectstore create project-obj-store --name project-cred --region FRA1
 
     # list object store bucket
 
-    civo objectstore ls --region FRA1
-    echo -e "\n"
+    civo objectstore ls
 
-    # configure s3cmd tool
-
-    s3cmd --configure
 }
 
 upload_files_store(){
     #install s3cmd
-    #sudo apt-get install s3cmd
+    #sudo pip install s3cmd
 
     # create a for loop to enable user to upload selected file or all the files
     declare -a arr=($@)
@@ -64,7 +60,7 @@ upload_files_store(){
         if [[ -n $file_exists  ]];
         then
 
-            read -p "File $i already exists. What would you like to do? (o)verwrite, (s)kip " choice
+            read -p "File '${file_name}' already exists. What would you like to do? (o)verwrite, (s)kip " choice
             case $choice in
             o | O)
                  pv "$i" | s3cmd --host=objectstore.fra1.civo.com  --host-bucket=s3://project-obj-store put --acl-public "$i" s3://project-obj-store
@@ -78,12 +74,11 @@ upload_files_store(){
         else
             while true;
             do
-
               read -p "Do you want to upload $i file: y | n " upload_file
               if [[ $upload_file =~ [yY] ]];
               then
-
-                  pv "$i" | s3cmd --host=objectstore.fra1.civo.com  --host-bucket=s3://project-obj-store put --acl-public "$i" s3://project-obj-store
+                  openssl enc -aes-256-cbc -salt -in "$i" -out "$i.enc"
+                  pv "$i" | s3cmd --host=objectstore.fra1.civo.com  --host-bucket=s3://project-obj-store put --acl-public "$i.enc" s3://project-obj-store
                   echo "Successfully uploaded $i"
                   break 1
 

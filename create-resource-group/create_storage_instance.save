@@ -11,7 +11,7 @@ setup() {
 
     # Add civo api key for authentication
 
-    civo apikey add Demo_Test <api-key>
+#    civo apikey add Demo_Test <api-key>
     echo "Api key added successfully."
     echo -e "\n\n"
 }
@@ -19,10 +19,12 @@ setup() {
 # create and list the object credential store in your account 
 
 create_obj_cred(){
+    # delete existing credential 
+    #civo objectstore credential delete project-cred --region FRA1
+    #civo objectstore credential delete project-cred --region LON1
 
-    #create the obj store credential
-
-    civo objectstore credential create project-cred --region FRA1
+    #create the obj store credential 
+    #civo objectstore credential create project-cred --region FRA1
 
     #echo "Credential created successfully"
 
@@ -33,23 +35,16 @@ create_obj_cred(){
 }
 
 create_obj_store(){
-
-    #create object store 
-    civo objectstore create project-obj-store --owner-name project-cred --region FRA1
-
-    # list object store bucket
-
-    civo objectstore ls --region FRA1
+    #check if there's any existing created objectstore 
+    civo objectstore ls
     echo -e "\n"
-
-    # configure s3cmd tool
-
-    s3cmd --configure
+    # create object store 
+    #civo objectstore create project-obj-store --region FRA1
 }
 
 upload_files_store(){
     #install s3cmd
-    #sudo apt-get install s3cmd
+    #sudo pip install s3cmd
 
     # create a for loop to enable user to upload selected file or all the files
     declare -a arr=($@)
@@ -60,11 +55,11 @@ upload_files_store(){
     if [[ -f "$i" ]];
     then
 
-        file_exists=$(civo objectstore ls s3://project-obj-store | grep "$i")
+
         if [[ -n $file_exists  ]];
         then
 
-            read -p "File $i already exists. What would you like to do? (o)verwrite, (s)kip " choice
+            read -p "File '${i}' already exists. What would you like to do? (o)verwrite, (s)kip " choice
             case $choice in
             o | O)
                  pv "$i" | s3cmd --host=objectstore.fra1.civo.com  --host-bucket=s3://project-obj-store put --acl-public "$i" s3://project-obj-store
@@ -78,11 +73,9 @@ upload_files_store(){
         else
             while true;
             do
-
               read -p "Do you want to upload $i file: y | n " upload_file
               if [[ $upload_file =~ [yY] ]];
               then
-
                   pv "$i" | s3cmd --host=objectstore.fra1.civo.com  --host-bucket=s3://project-obj-store put --acl-public "$i" s3://project-obj-store
                   echo "Successfully uploaded $i"
                   break 1
@@ -97,7 +90,7 @@ upload_files_store(){
 
               fi
             done
-       fi
+        fi
     else
         echo "No file found. It might be a directory"
 
@@ -110,7 +103,7 @@ upload_files_store(){
 file_nae=("create_resource_group" "create_storage_instance" "hello-dummy.txt")
 
 
-setup
-create_obj_cred
-create_obj_store
+#setup
+#create_obj_cred
+#create_obj_store
 upload_files_store ${file_nae[@]}
