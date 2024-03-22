@@ -7,7 +7,7 @@
 
 setup() { 
     # Install aws cli
-    sudo yum install aws-cli
+    sudo apt install aws-cli
 
     # configure your aws cli
 
@@ -34,7 +34,7 @@ create_s3_bucket(){
 install_s3cmd_tool(){
     # install s3cmd tool
 
-    sudo yum update && yum --enablerepo epel-testing install s3cmd
+    sudo apt-get update && sudo apt-get install s3cmd
 
     # configure s3cmd tool
 
