@@ -6,8 +6,7 @@
 
 
 setup() {
-    # Install aws cli
-    sudo yum install aws-cli
+
 
     # configure your aws cli
 
