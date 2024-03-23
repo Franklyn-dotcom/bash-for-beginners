@@ -5,14 +5,22 @@
 # upload experience similar to popular storage services.
 
 
-setup() { 
+setup() {
     # Install aws cli
-    sudo apt install aws-cli
+    sudo yum install aws-cli
 
     # configure your aws cli
 
     aws configure
     echo "Successfully configured!"
+
+    # install pip
+
+    sudo yum install pip
+
+    #install pv for viewing the progress of a file
+
+    sudo yum install pv
 
 }
 
@@ -29,12 +37,13 @@ create_s3_bucket(){
     # list the available s3 bucket
     aws s3 ls
 
+
 }
 
 install_s3cmd_tool(){
     # install s3cmd tool
 
-    sudo apt-get update && sudo apt-get install s3cmd
+    pip install s3cmd
 
     # configure s3cmd tool
 
@@ -56,10 +65,10 @@ upload_files_store(){
         if [[ -n $file_exists  ]];
         then
 
-            read -p "File $i already exists. What would you like to do? (o)verwrite, (s)kip " choice
+            read -p " $i file already exists. What would you like to do? (o)verwrite, (s)kip " choice
             case $choice in
             o | O)
-                 pv "$i" | s3cmd --host=s3-eu-north-1.amazonaws.com  --host-bucket=s3://technical-project put --acl-public "$i" s3://technical-project
+                 pv "$i" | s3cmd --host=s3-eu-north-1.amazonaws.com  --host-bucket=s3://technical-project put "$i" s3://technical-project
                  echo "$i file  overwritten successfully"
                  ;;
             s | S)
@@ -75,7 +84,7 @@ upload_files_store(){
               if [[ $upload_file =~ [yY] ]];
               then
 
-                  pv "$i" | s3cmd --host=s3-eu-north-1.amazonaws.com  --host-bucket=s3://technical-project put --acl-public "$i" s3://technical-project
+                  pv "$i" | s3cmd --host=s3-eu-north-1.amazonaws.com  --host-bucket=s3://technical-project put "$i" s3://technical-project
                   echo "Successfully uploaded $i"
                   break 1
 
@@ -85,7 +94,7 @@ upload_files_store(){
                   break
 
               else
-                  echo "You didn't select any choice. 0 file Uploaded." 
+                  echo "You didn't select any choice. 0 file uploaded."
 
               fi
             done
